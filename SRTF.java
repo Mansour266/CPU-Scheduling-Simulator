@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-
+// TODO: NOTE: SRTF SHOULD BE FED WITH THE PROCESS AT THE ARRIVAL TIMES OF THE EXTERNAL ..
 public class SRTF {
 
     int totalWaitingTimes;
