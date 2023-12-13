@@ -5,6 +5,7 @@ public class SRTF {
     int totalWaitingTimes;
     int totalTurnAroundTimes;
     ArrayList<String> schedulerData;
+    int numOfProcesses; // denotes the number of processes to ever exist
     private final int REMAINING_TIME_WEIGHT = 2;
     private final int AGING_PRIORITY_WEIGHT = 3;
 
@@ -29,9 +30,10 @@ public class SRTF {
     }
     ArrayList<SRTFProcess> readyQueue;
     SRTF(ArrayList<Process> processes){
+        numOfProcesses=0;
         readyQueue = new ArrayList<SRTFProcess>();
         for(Process p :processes){
-            readyQueue.add(new SRTFProcess(p.pid, p.arrivalTime, p.burstTime, p.priority));
+            addProcess(p);
         }
         totalWaitingTimes = 0;
         totalTurnAroundTimes = 0;
@@ -40,6 +42,7 @@ public class SRTF {
 
     void addProcess(Process p){
         readyQueue.add(new SRTFProcess(p.pid, p.arrivalTime, p.burstTime, p.priority));
+        numOfProcesses++;
     }
 
     public void runSRTF(){
@@ -81,7 +84,7 @@ public class SRTF {
                 totalWaitingTimes+=waitingTime;
 
                 schedulerData.add("Process: " + srtfProcess.pid + " | Waiting Time: "
-                        + waitingTime + " | Turn Around Time: " + turnAroundTime);
+                        + waitingTime + " | Turnaround Time: " + turnAroundTime);
 
                 readyQueue.remove(currentProcessIndex);
             }
@@ -93,9 +96,17 @@ public class SRTF {
     }
 
     public void getSchedulingStatistics(){
+        System.out.println("Waiting and turnaround times for each process\n");
+        System.out.println("------------------------------------------------");
         for (String s:schedulerData){
             System.out.println(s);
         }
-    }
 
+        double averageWaitingTime = (double)totalWaitingTimes/numOfProcesses;
+        double averageTurnaroundTime = (double)totalTurnAroundTimes/numOfProcesses;
+
+        System.out.println("------------------------------------------------");
+        System.out.println("Average waiting time = " + averageWaitingTime);
+        System.out.println("Average turnaround time = " + averageTurnaroundTime);
+    }
 }
