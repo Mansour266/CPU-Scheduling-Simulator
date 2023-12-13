@@ -1,14 +1,17 @@
 import org.w3c.dom.css.RGBColor;
 
-import java.util.Scanner;
+import java.util.*;
+
 class Process{
     int pid;
     int arrivalTime;
     int burstTime;
     int priority;
     RGBColor color;
-}
-class AGScheduling{
+
+    // For AG Scheduling
+    int quantum;
+    int agFactor;
 
 }
 public class CPU_Simulator {
@@ -16,37 +19,36 @@ public class CPU_Simulator {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("_____________________________");
-        System.out.println("Choose a scheduling method: ");
-        System.out.println("_____________________________");
-        System.out.println("1. Non-Preemptive Shortest Job First");
-        System.out.println("2. Shortest Remaining Time First");
-        System.out.println("3. Non-Preemptive Priority");
-        System.out.println("4. AG Scheduling");
-        System.out.println("_____________________________");
-        System.out.print("Choice: ");
-        int schMethod = scanner.nextInt();
-
-
         System.out.print("Enter number of processes: ");
         int numProcs = scanner.nextInt();
 
+        System.out.print("Enter the Round Robin Quantum: ");
+        int quantum = scanner.nextInt();
+
+        System.out.print("Enter the switching context time: ");
         Process[] processes = new Process[numProcs];
         for (int i = 0; i < numProcs; i++) {
             processes[i] = new Process();
             System.out.println("_____________________________");
             System.out.println("Process " + (i+1) + ": ");
             System.out.println("_____________________________");
-            System.out.print("Process ID: ");
-            processes[i].pid = scanner.nextInt();
-            System.out.print("Arrival Time: ");
-            processes[i].arrivalTime = scanner.nextInt();
+            processes[i].pid = i+1;
             System.out.print("Burst Time: ");
             processes[i].burstTime = scanner.nextInt();
+            System.out.print("Arrival Time: ");
+            processes[i].arrivalTime = scanner.nextInt();
             System.out.print("Priority: ");
             processes[i].priority = scanner.nextInt();
+            processes[i].quantum = quantum;
 
         }
+        System.out.println("_____________________________");
+        System.out.println("AG:");
+        AG agScheduling = new AG(processes);
+        agScheduling.run();
+        System.out.println("_____________________________");
 
 
     }
 }
+// AG example in assignment: 4 4 17 0 4 6 3 9 10 4 3 4 29 8
