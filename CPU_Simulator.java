@@ -1,13 +1,6 @@
 import org.w3c.dom.css.RGBColor;
 
 import java.util.Scanner;
-class Process{
-    int pid;
-    int arrivalTime;
-    int burstTime;
-    int priority;
-    RGBColor color;
-}
 class AGScheduling{
 
 }
