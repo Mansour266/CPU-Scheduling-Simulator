@@ -1,11 +1,17 @@
 import java.util.*;
 public class SJF {
+    //Define core variables for the algorithm.
     private static Process[] processes;
     private static List<Process> executedProcesses;
-    private static List<Integer> times;
+    private static List<Integer> times;//Here we store the execution times of each process.
+    private static int currentTime = 0;
+
+    //Define variables needed for statistical analysis for the algorithm
     private static int waitingTimes = 0;
+    private static int turnAroundTimes = 0;
     private static int time = 0;
-    public SJF(Process[] processes) {
+
+    public SJF(Process[] processes) { //Default constructor.
         this.processes = processes;
         this.executedProcesses = new ArrayList<>();
         this.times = new ArrayList<>();
@@ -15,8 +21,6 @@ public class SJF {
         // sort processes by arrival time
         Arrays.sort(processes, Comparator.comparingInt(p -> p.arrivalTime));
 
-        int currentTime = 0;
-
         while (processes.length > 0) {
             Process shortestJob = findShortestJob(currentTime);
 
@@ -25,14 +29,19 @@ public class SJF {
                 continue;
             }
 
-            executedProcesses.add(shortestJob);
+            //Here we calculate the statistics of the algorithm.
+            turnAroundTimes += currentTime  - shortestJob.arrivalTime + shortestJob.burstTime;
             waitingTimes += currentTime - shortestJob.arrivalTime;
-            processes = removeProcess(shortestJob);
-            times.add(currentTime);
+
             currentTime += shortestJob.burstTime;
             currentTime++; //here we added 1 to simulate context switching
 
-            //This loop prints the ongoing process.
+            //These variables are used for printing and calculations of scheduling process.
+            executedProcesses.add(shortestJob);
+            processes = removeProcess(shortestJob);
+            times.add(currentTime);
+
+            //This loop prints the ongoing process in real time.
             while (time <= currentTime - 1) {
                 if(time == currentTime - 1 && currentTime - 1 > 0){
                     System.out.println("At t=" + time + " - Context Switching");
@@ -55,7 +64,10 @@ public class SJF {
         }
 
         System.out.println("-------");
+
+        //print statistical data of the scheduling algorithm.
         System.out.println("Average waiting time: " + (double)waitingTimes / executedProcesses.size());
+        System.out.println("Average turnaround time: " + (double)turnAroundTimes / executedProcesses.size());
     }
 
     //This method removes the process after execution
