@@ -8,8 +8,8 @@ public class SRTFScheduler {
     ArrayList<String> schedulerData;
     int numOfProcesses; // num of processes in input processes
     int completedProcesses;
-    private final double REMAINING_TIME_WEIGHT = 1;
-    private final double AGING_PRIORITY_WEIGHT = 0;
+    private final double REMAINING_TIME_WEIGHT = 2;
+    private final double AGING_PRIORITY_WEIGHT = 1;
 
     class SRTFProcess{
         int pid;
