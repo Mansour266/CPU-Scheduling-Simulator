@@ -45,7 +45,7 @@ public class AG {
     private int getIndexOfHighestAGFactor() {
         Process highestAG = readyList.get(0);
         for (Process process : readyList) {
-            if (process.agFactor < highestAG.agFactor)
+            if (process.agFactor > highestAG.agFactor)
                 highestAG = process;
         }
         return readyList.indexOf(highestAG);
@@ -77,17 +77,17 @@ public class AG {
     }
 
     public void run() {
-        int time = 0;
+        int time = -1;
         int processQuantumCounter = 0;
-        currentProcessIndex = getIndexOfHighestAGFactor();
+        int currentProcessIndex = 0;
 
-        while (readyList.size() > 0) {
-            System.out.println("Time " + time + ", Process " + readyList.get(currentProcessIndex).pid + " Burst Time: " + readyList.get(currentProcessIndex).burstTime);
+        while (readyList.size() > 0 || waitList.size() > 0) {
             time++;
+            System.out.println("Time " + time + " begin, Process " + readyList.get(currentProcessIndex).pid + " Burst Time: " + readyList.get(currentProcessIndex).burstTime);
             processQuantumCounter++;
-            updateBurstTime(currentProcessIndex, readyList.get(currentProcessIndex).burstTime - 1);
-            int highestAGIndex = getIndexOfHighestAGFactor();
             checkArrivals(time);
+            int highestAGIndex = getIndexOfHighestAGFactor();
+
             Process currentProcess = readyList.get(currentProcessIndex);
             // First the non-preemptive part
             // if quantum is over and process is not done
@@ -109,15 +109,19 @@ public class AG {
             // Now the preemptive part
             else if (processQuantumCounter >= Math.ceil((double) currentProcess.quantum / 2)) {
                 // Preemptive
-                if (currentProcess.agFactor < readyList.get(highestAGIndex).agFactor) {
+                if (currentProcess.agFactor < readyList.get(highestAGIndex).agFactor && currentProcessIndex != highestAGIndex) {
                     // Give the current process the remaining quantum time of itself
                     int newQuantum = currentProcess.quantum - processQuantumCounter;
                     newQuantum += currentProcess.quantum;
                     updateQuantum(currentProcessIndex, newQuantum);
                     currentProcessIndex = highestAGIndex;
                     processQuantumCounter = 0;
+
                 }
             }
+            updateBurstTime(currentProcessIndex, readyList.get(currentProcessIndex).burstTime - 1);
+            System.out.println("Time " + (time) + " end, Process " + readyList.get(currentProcessIndex).pid + " Burst Time: " + readyList.get(currentProcessIndex).burstTime);
+
 
         }
     }
