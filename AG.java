@@ -78,14 +78,14 @@ public class AG {
     }
 
     public void run() {
-        int time = -1;
+        int time = 0;
         int processQuantumCounter = 0;
         int currentProcessIndex = 0;
 
         while (readyList.size() > 0 || waitList.size() > 0) {
-            time++;
             System.out.println("Time " + time + " begin, Process " + readyList.get(currentProcessIndex).pid + " Burst Time: " + readyList.get(currentProcessIndex).burstTime);
             processQuantumCounter++;
+            time++;
             checkArrivals(time);
             int highestAGIndex = getIndexOfHighestAGFactor();
             updateBurstTime(currentProcessIndex, readyList.get(currentProcessIndex).burstTime - 1);
@@ -126,8 +126,6 @@ public class AG {
                             "Switch to high AG Factor, process " + readyList.get(currentProcessIndex).pid + " is next");
                 }
             }
-            time++;
-            processQuantumCounter++;
         }
     }
 }
