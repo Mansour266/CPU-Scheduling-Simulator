@@ -22,7 +22,8 @@ public class AG {
                 process.agFactor = agFactor(process);
                 readyList.add(process);
                 waitList.remove(process);
-                System.out.println("Process " + process.pid + " arrived at time " + time + " with AG factor " + process.agFactor);
+                System.out.println(
+                        "Process " + process.pid + " arrived at time " + time + " with AG factor " + process.agFactor);
             }
         }
     }
@@ -87,6 +88,7 @@ public class AG {
             processQuantumCounter++;
             checkArrivals(time);
             int highestAGIndex = getIndexOfHighestAGFactor();
+            updateBurstTime(currentProcessIndex, readyList.get(currentProcessIndex).burstTime - 1);
 
             Process currentProcess = readyList.get(currentProcessIndex);
             // First the non-preemptive part
@@ -97,6 +99,7 @@ public class AG {
                 putProcessInEndOfReadyList(currentProcess);
                 currentProcessIndex = 0;
                 processQuantumCounter = 0;
+                System.out.println("Quantum is over, process " + readyList.get(currentProcessIndex).pid + " is next");
             }
             // if process is done
             else if (currentProcess.burstTime == 0) {
@@ -105,6 +108,8 @@ public class AG {
                 dieList.add(currentProcess);
                 currentProcessIndex = 0;
                 processQuantumCounter = 0;
+                // System.out.println("Process is over, process " +
+                // readyList.get(currentProcessIndex).pid + " is next");
             }
             // Now the preemptive part
             else if (processQuantumCounter >= Math.ceil((double) currentProcess.quantum / 2)) {
@@ -117,12 +122,12 @@ public class AG {
                     currentProcessIndex = highestAGIndex;
                     processQuantumCounter = 0;
 
+                    System.out.println(
+                            "Switch to high AG Factor, process " + readyList.get(currentProcessIndex).pid + " is next");
                 }
             }
-            updateBurstTime(currentProcessIndex, readyList.get(currentProcessIndex).burstTime - 1);
-            System.out.println("Time " + (time) + " end, Process " + readyList.get(currentProcessIndex).pid + " Burst Time: " + readyList.get(currentProcessIndex).burstTime);
-
-
+            time++;
+            processQuantumCounter++;
         }
     }
 }
