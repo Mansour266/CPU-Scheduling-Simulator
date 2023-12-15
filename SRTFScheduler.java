@@ -125,8 +125,6 @@ public class SRTFScheduler {
         System.out.println("Average Waiting Time: " + averageWaitingTime);
         System.out.println("Average Turnaround Time: " + averageTurnaroundTime);
         System.out.println("-------");
-        System.out.println("END OF SRTF SCHEDULER");
-        System.out.println("-------");
     }
 
 }
