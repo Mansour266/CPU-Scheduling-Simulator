@@ -8,11 +8,11 @@ public class AG {
     ArrayList<Process> waitList;
     int currentProcessIndex;
 
-    public AG(Process[] processes) {
+    public AG(ArrayList<Process> processes) {
         readyList = new ArrayList<>();
         dieList = new ArrayList<>();
         waitList = new ArrayList<>();
-        waitList.addAll(Arrays.asList(processes));
+        waitList.addAll(processes);
         checkArrivals(0);
     }
 

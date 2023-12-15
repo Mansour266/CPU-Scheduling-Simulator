@@ -5,27 +5,16 @@ class Process{
     int burstTime;
     int priority;
 
-//        RGBColor color;
+    // for AG Scheduling
+    public int quantum;
+    public int agFactor;
 
-    Process(int pid, int arrivalTime, int burstTime, int priority){
+    Process(int pid, int arrivalTime, int burstTime, int priority, int quantum){
         this.pid = pid;
         this.arrivalTime = arrivalTime;
         this.burstTime = burstTime;
         this.priority = priority;
+        this.quantum = quantum;
     }
 }
-
-
-//public class Process {
-//    public int pid;
-//    public int arrivalTime;
-//    public int burstTime;
-//    public int priority;
-//    public RGBColor color;
-//    public String name;
-//
-//    // For AG Scheduling
-//    public int quantum;
-//    public int agFactor;
-//}
 
