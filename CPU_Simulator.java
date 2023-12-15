@@ -18,7 +18,7 @@ public class CPU_Simulator {
 
             System.out.println("=============================");
 
-            System.out.println("Process ID: ");
+            System.out.print("Process ID: ");
             int id = scanner.nextInt();
 
             System.out.print("Arrival Time: ");
@@ -36,8 +36,8 @@ public class CPU_Simulator {
         // SJF (Pb1)
         System.out.println("=============================");
         System.out.println("--SJF SCHEDULER START--");
-        // SJF sjf = new SJF(processes);
-        // sjf.runSJF();
+        SJF sjf = new SJF(processes);
+        sjf.runSJF();
         System.out.println("--SJF SCHEDULER END--");
         System.out.println("=============================");
 

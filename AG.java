@@ -86,18 +86,18 @@ public class AG {
     }
 
     private void printProcessStatistics() {
-        System.out.println("====================================================================================================================");
+        System.out.println("-------");
         dieList.sort((p1, p2) -> p1.pid - p2.pid);
         for (Process process : dieList) {
-            String processOutput = "Executing process = " + process.pid;
-            processOutput += " | Arrival Time = " + process.arrivalTime;
-            processOutput += " | Burst Time = " + processesBurstTime.get(process.pid);
-            processOutput += " | Priority = " + process.priority;
-            processOutput += " | Waiting Time = " + waitingTimes.get(process.pid);
-            processOutput += " | Turnaround Time = " + turnaroundTimes.get(process.pid);
+            String processOutput = "Executing process: " + process.pid;
+            processOutput += " | Arrival Time: " + process.arrivalTime;
+            processOutput += " | Burst Time: " + processesBurstTime.get(process.pid);
+            processOutput += " | Priority: " + process.priority;
+            processOutput += " | Waiting Time: " + waitingTimes.get(process.pid);
+            processOutput += " | Turnaround Time: " + turnaroundTimes.get(process.pid);
             System.out.println(processOutput);
         }
-        System.out.println("====================================================================================================================");
+        System.out.println("-------");
         System.out.println("Average Waiting Time = " + avgWaitingTime);
         System.out.println("Average Turnaround Time = " + avgTurnaroundTime);
     }
@@ -146,7 +146,7 @@ public class AG {
                 updateQuantum(currentProcessIndex, 0);
                 readyList.remove(currentProcessIndex);
                 dieList.add(currentProcess);
-                turnaroundTimes.put(currentProcess.pid, time - currentProcess.arrivalTime + 1);
+                turnaroundTimes.put(currentProcess.pid, time - currentProcess.arrivalTime);
                 waitingTimes.put(currentProcess.pid,
                         turnaroundTimes.get(currentProcess.pid) - processesBurstTime.get(currentProcess.pid));
                 currentProcessIndex = 0;
