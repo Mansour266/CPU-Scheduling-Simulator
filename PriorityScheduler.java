@@ -22,7 +22,7 @@ public class PriorityScheduler {
     
     // Constructor to sort the processes according to their arrival time.
     public PriorityScheduler(ArrayList<Process> processes) {
-        this.processes = processes;
+        this.processes = new ArrayList<Process>(processes);
         processes.sort(new Comparator<Process>() {
             @Override
             public int compare(Process p1, Process p2) {
@@ -116,8 +116,6 @@ public class PriorityScheduler {
         System.out.println("-------");
         System.out.println("Average Waiting Time: " + averageWaitingTime);
         System.out.println("Average Turnaround Time: " + averageTurnaroundTime);
-        System.out.println("-------");
-        System.out.println("END OF PRIORITY SCHEDULER");
         System.out.println("-------");
     }
 }

@@ -51,6 +51,9 @@ public class CPU_Simulator {
         System.out.println("--SRTF SCHEDULER END--");
         System.out.println("=============================");
 
+        System.out.println();
+
+
         // Priority Scheduler (Pb3)
         System.out.println("=============================");
         System.out.println("--PRIORITY SCHEDULER--");
@@ -59,14 +62,16 @@ public class CPU_Simulator {
         System.out.println("--PRIORITY SCHEDULER END--");
         System.out.println("=============================");
 
+        System.out.println();
 
-        // AG Scheduler (Pb3)
+        // AG Scheduler (Pb4)
         System.out.println("=============================");
         System.out.println("--AG SCHEDULER--");
         AG ag = new AG(processes);
         ag.run();
         System.out.println("--AG END--");
         System.out.println("=============================");
+        System.out.println();
 
     }
 }

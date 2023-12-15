@@ -33,7 +33,7 @@ public class SRTFScheduler {
     SRTFScheduler(ArrayList<Process> processes){
         numOfProcesses = processes.size();
         readyQueue = new ArrayList<SRTFProcess>();
-        inputProcesses = processes;
+        inputProcesses = new ArrayList<Process>(processes);
         totalTurnAroundTimes = 0;
         totalWaitingTimes = 0;
         completedProcesses = 0;
