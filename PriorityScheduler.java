@@ -21,6 +21,7 @@ public class PriorityScheduler {
     // --------------
     // If a process is finished, another one cant start at the same time (FIXED)
     // Check if aging works to prevent starvation
+    // There is a problem where the priorities aren't sorted correctly
     
     // Need to run more tests, otherwise currently fine
     
@@ -33,12 +34,13 @@ public class PriorityScheduler {
     PriorityQueue<Process> readyQueue = new PriorityQueue<Process>(new Comparator<Process>() {
         @Override
         public int compare(Process p1, Process p2) {
-            if (p1.priority == p2.priority) {
-                return Integer.compare(p1.arrivalTime, p2.arrivalTime);
-            }
-            return Integer.compare(p1.priority, p2.priority);
+            // Compare based on priority, and if priorities are equal, compare based on arrival time
+            return Integer.compare(p1.priority, p2.priority) == 0
+                    ? Integer.compare(p1.arrivalTime, p2.arrivalTime)
+                    : Integer.compare(p1.priority, p2.priority);
         }
     });
+    
     
     // Constructor to sort the processes according to their arrival time
     public PriorityScheduler(ArrayList<Process> processes) {
