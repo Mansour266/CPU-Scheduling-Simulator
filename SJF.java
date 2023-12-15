@@ -12,9 +12,9 @@ public class SJF {
     private static int time = 0;
 
     public SJF(ArrayList<Process> processes) { //Default constructor.
-        this.processes = new ArrayList<Process>(processes);
-        this.executedProcesses = new ArrayList<>();
-        this.times = new ArrayList<>();
+        SJF.processes = new ArrayList<Process>(processes);
+        executedProcesses = new ArrayList<>();
+        times = new ArrayList<>();
     }
 
     void runSJF(){
