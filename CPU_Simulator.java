@@ -30,6 +30,8 @@ public class CPU_Simulator {
 //            processes[i].quantum = quantum;
 
         }
+        PriorityScheduler priorityScheduler = new PriorityScheduler(processes);
+        priorityScheduler.run();
 //        System.out.println("=============================");
 //        System.out.println("AG:");
 //        AG agScheduling = new AG(processes);
