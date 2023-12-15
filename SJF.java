@@ -1,9 +1,9 @@
 import java.util.*;
 public class SJF {
     //Define core variables for the algorithm.
-    private static Process[] processes;
-    private static List<Process> executedProcesses;
-    private static List<Integer> times;//Here we store the execution times of each process.
+    private static ArrayList<Process> processes;
+    private static ArrayList<Process> executedProcesses;
+    private static ArrayList<Integer> times;//Here we store the execution times of each process.
     private static int currentTime = 0;
 
     //Define variables needed for statistical analysis for the algorithm
@@ -11,17 +11,17 @@ public class SJF {
     private static int turnAroundTimes = 0;
     private static int time = 0;
 
-    public SJF(Process[] processes) { //Default constructor.
-        this.processes = processes;
-        this.executedProcesses = new ArrayList<>();
-        this.times = new ArrayList<>();
+    public SJF(ArrayList<Process> processes) { //Default constructor.
+        SJF.processes = new ArrayList<Process>(processes);
+        executedProcesses = new ArrayList<>();
+        times = new ArrayList<>();
     }
 
     void runSJF(){
         // sort processes by arrival time
-        Arrays.sort(processes, Comparator.comparingInt(p -> p.arrivalTime));
+        processes.sort(Comparator.comparingInt(p -> p.arrivalTime));
 
-        while (processes.length > 0) {
+        while (!processes.isEmpty()) {
             Process shortestJob = findShortestJob(currentTime);
 
             if (shortestJob == null) {
@@ -33,21 +33,23 @@ public class SJF {
             turnAroundTimes += currentTime  - shortestJob.arrivalTime + shortestJob.burstTime;
             waitingTimes += currentTime - shortestJob.arrivalTime;
 
-            currentTime += shortestJob.burstTime;
-            currentTime++; //here we added 1 to simulate context switching
 
             //These variables are used for printing and calculations of scheduling process.
             executedProcesses.add(shortestJob);
-            processes = removeProcess(shortestJob);
+            processes.remove(shortestJob);
             times.add(currentTime);
+
+
+            currentTime += shortestJob.burstTime;
+            currentTime++; //here we added 1 to simulate context switching
 
             //This loop prints the ongoing process in real time.
             while (time <= currentTime - 1) {
                 if(time == currentTime - 1 && currentTime - 1 > 0){
-                    System.out.println("At t=" + time + " - Context Switching");
+                    System.out.println("At t = " + time + " - Context Switching");
                 }
                 else{
-                    System.out.println("At t=" + time + " - Process ID: " + shortestJob.pid);
+                    System.out.println("At t = " + time + " - Process ID: " + shortestJob.pid);
                 }
 
                 time++;
@@ -68,18 +70,6 @@ public class SJF {
         //print statistical data of the scheduling algorithm.
         System.out.println("Average waiting time: " + (double)waitingTimes / executedProcesses.size());
         System.out.println("Average turnaround time: " + (double)turnAroundTimes / executedProcesses.size());
-    }
-
-    //This method removes the process after execution
-    private Process[] removeProcess(Process shortestJob) {
-        Process[] newProcesses = new Process[processes.length - 1];
-        int i = 0;
-        for (Process process : processes) {
-            if (process != shortestJob) {
-                newProcesses[i++] = process;
-            }
-        }
-        return newProcesses;
     }
 
     //This should find the shortest job within the allowed arrival time.

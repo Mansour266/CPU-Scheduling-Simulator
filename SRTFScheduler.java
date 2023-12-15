@@ -33,7 +33,7 @@ public class SRTFScheduler {
     SRTFScheduler(ArrayList<Process> processes){
         numOfProcesses = processes.size();
         readyQueue = new ArrayList<SRTFProcess>();
-        inputProcesses = processes;
+        inputProcesses = new ArrayList<Process>(processes);
         totalTurnAroundTimes = 0;
         totalWaitingTimes = 0;
         completedProcesses = 0;
@@ -124,8 +124,6 @@ public class SRTFScheduler {
         System.out.println("-------");
         System.out.println("Average Waiting Time: " + averageWaitingTime);
         System.out.println("Average Turnaround Time: " + averageTurnaroundTime);
-        System.out.println("-------");
-        System.out.println("END OF SRTF SCHEDULER");
         System.out.println("-------");
     }
 
