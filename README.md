@@ -22,7 +22,7 @@ AG Scheduling is a custom scheduling algorithm designed specifically for this si
 ## Contributors
 - [Yusuf Badr](https://github.com/yusufbadr)
 - [Ziad Karson](https://github.com/kziad)
-- [Name](github_link)
+- [Mohamed Elashmawy](https://github.com/Dark2343)
 - [Name](github_link)
 - [Name](github_link)
 
